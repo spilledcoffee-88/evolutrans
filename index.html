@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EvoluTrans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/vanilla-calendar@1.4/build/vanilla-calendar.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app">
+    <header>
+      <h1>EvoluTrans</h1>
+      <div class="header-accent"></div>
+      <p class="tagline">Celebrate your journey</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="home"><i class="fas fa-home"></i> Home</button>
+      <button class="tab-button" data-tab="hormones"><i class="fas fa-flask"></i> Hormones</button>
+      <button class="tab-button" data-tab="appointments"><i class="fas fa-calendar"></i> Appointments</button>
+      <button class="tab-button" data-tab="mood"><i class="fas fa-smile"></i> Mood</button>
+      <button class="tab-button" data-tab="timeline"><i class="fas fa-images"></i> Timeline</button>
+      <button class="tab-button" data-tab="journal"><i class="fas fa-book"></i> Journal</button>
+    </div>
+
+    <div class="tab-content">
+      <!-- Home Tab -->
+      <div id="home" class="tab-pane active">
+        <h2>Welcome Back!</h2>
+        <div class="card summary-card">
+          <p><i class="fas fa-flask"></i> Last T dose: <span id="last-dose">Not logged</span></p>
+          <p><i class="fas fa-calendar"></i> Next appointment: <span id="next-appointment">None scheduled</span></p>
+          <p><i class="fas fa-smile"></i> Recent mood: <span id="recent-mood">No data</span></p>
+        </div>
+
+        <div class="card roadmap">
+          <h3>My Transition Roadmap</h3>
+          <div class="roadmap-progress">
+            <div class="progress-bar">
+              <div id="progress-bar"></div>
+            </div>
+            <span id="progress-text">0% Complete</span>
+          </div>
+          <ul id="roadmap-items"></ul>
+          <button id="add-milestone" class="action-button">+ Add Milestone</button>
+        </div>
+      </div>
+
+      <!-- Hormones Tab -->
+      <div id="hormones" class="tab-pane">
+        <h2>Hormone Tracker</h2>
+        <div class="card log-dose">
+          <input type="date" id="dose-date">
+          <select id="hormone-type">
+            <option value="estrogen">Estrogen</option>
+            <option value="testosterone">Testosterone</option>
+          </select>
+          <button id="log-dose-button" class="action-button">Log Dose</button>
+        </div>
+        <div id="dose-history" class="card-container"></div>
+      </div>
+
+      <!-- Appointments Tab -->
+      <div id="appointments" class="tab-pane">
+        <h2>Appointments</h2>
+        <div class="calendar-view-toggle">
+          <button data-view="month" class="active">Month</button>
+          <button data-view="week">Week</button>
+          <button data-view="day">Day</button>
+        </div>
+        <div class="card calendar-container">
+          <div id="calendar"></div>
+        </div>
+
+        <div class="card appointment-form">
+          <input type="text" id="appointment-title" placeholder="Title">
+          <input type="date" id="appointment-date">
+          <input type="time" id="appointment-time" value="09:00">
+          <select id="appointment-duration">
+            <option value="30">30 min</option>
+            <option value="60" selected>1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+          </select>
+          <select id="appointment-category">
+            <option value="medical" style="color: #FF6B6B;">Medical</option>
+            <option value="therapy" style="color: #4ECDC4;">Therapy</option>
+            <option value="surgery" style="color: #FFD166;">Surgery</option>
+            <option value="social" style="color: #A2C7E5;">Social</option>
+          </select>
+          <textarea id="appointment-notes" placeholder="Notes"></textarea>
+          <button id="save-appointment" class="action-button">Save Appointment</button>
+        </div>
+
+        <div id="appointments-list" class="card-container"></div>
+      </div>
+
+      <!-- Mood Tab -->
+      <div id="mood" class="tab-pane">
+        <h2>Mood & Symptoms</h2>
+        <div class="card mood-input">
+          <input type="date" id="mood-date">
+          <select id="mood-rating">
+            <option value="😊">😊 Great</option>
+            <option value="🙂">🙂 Good</option>
+            <option value="😐">😐 Neutral</option>
+            <option value="🙁">🙁 Bad</option>
+            <option value="😢">😢 Awful</option>
+          </select>
+          <button id="log-mood-button" class="action-button">Log Mood</button>
+        </div>
+        <div id="mood-history" class="card-container"></div>
+      </div>
+
+      <!-- Timeline Tab -->
+      <div id="timeline" class="tab-pane">
+        <h2>Timeline & Photos</h2>
+        <div class="card photo-upload">
+          <h3>Progress Photos</h3>
+          <input type="file" id="photo-upload" accept="image/*" multiple>
+          <div id="photo-gallery" class="photo-grid"></div>
+        </div>
+      </div>
+
+      <!-- Journal Tab -->
+      <div id="journal" class="tab-pane">
+        <h2>Journal</h2>
+        <div class="card">
+          <textarea id="journal-entry" placeholder="Write your thoughts here..."></textarea>
+          <button id="save-journal-button" class="action-button">Save Entry</button>
+        </div>
+        <div id="journal-entries" class="card-container"></div>
+
+        <div class="card voice-recorder">
+          <h3>Voice Diary</h3>
+          <div class="audio-visualizer" id="visualizer"></div>
+          <button id="record-button" class="action-button">
+            <i class="fas fa-microphone"></i> Start Recording
+          </button>
+          <button id="stop-button" class="action-button" disabled>
+            <i class="fas fa-stop"></i> Stop
+          </button>
+          <div id="voice-entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar@1.4/build/vanilla-calendar.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
